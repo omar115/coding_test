@@ -28,3 +28,37 @@ class ChildUserModel(models.Model):
     
     def __str__(self) -> str:
         return self.child_first_name
+
+
+# use of abstract class
+# class Author(models.Model):
+#     name = models.CharField(max_length=50)
+#     age = models.CharField(max_length=50)
+
+#     class Meta:
+#         abstract = True
+    
+# class Book(Author):
+#     zip = models.IntegerField()
+
+
+# multi table model inheritence
+
+class Address(models.Model):
+    state = models.CharField(max_length=10)
+    city = models.CharField(max_length=5)
+    zip = models.IntegerField()
+
+class Author(Address):
+    address_ptr = models.OneToOneField(Address, on_delete=models.CASCADE,
+    parent_link=True, primary_key=True)
+    name = models.CharField(max_length=15)
+
+    def __str__(self) -> str:
+        return self.name
+
+class Book(models.Model):
+    title = models.CharField(max_length=15)
+
+    def __str__(self) -> str:
+        return self.title

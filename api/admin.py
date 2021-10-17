@@ -5,3 +5,6 @@ from .models import *
 
 admin.site.register(ParentUserModel)
 admin.site.register(ChildUserModel)
+admin.site.register(Book)
+admin.site.register(Author)
+admin.site.register(Address)
