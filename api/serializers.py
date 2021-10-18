@@ -4,33 +4,17 @@ from .models import *
 
 
 class ParentUserModelSerializer(serializers.ModelSerializer):
-
     class Meta:
-        model = ParentUserModel
+        model = ParentUser
         fields = '__all__'
+    
 
 
 class ChildUserModelSerializer(serializers.ModelSerializer):
-    
+
+    parent = ParentUserModelSerializer(read_only=True)
     class Meta:
-        model = ChildUserModel
-        fields = ['child_first_name', 'child_last_name', 'parent']
-
-
-
-
-class AuthorSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Author
+        model = ChildUser
         fields = '__all__'
-        
-
-class BookSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Book
-        fields='__all__'
         depth = 1
-        
         
