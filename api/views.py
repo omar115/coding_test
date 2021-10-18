@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView
 from .models import *
 from .serializers import *
 
@@ -19,3 +19,8 @@ class AuthorListApiView(ListAPIView):
 class AuthorCreateApiView(CreateAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+
+class BookUpdateApiView(UpdateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    lookup_field='id'

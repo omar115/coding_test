@@ -46,18 +46,22 @@ class ChildUserModel(models.Model):
 
 class Address(models.Model):
     state = models.CharField(max_length=10)
-    city = models.CharField(max_length=5)
+    city = models.CharField(max_length=50)
     zip = models.IntegerField()
 
+    class Meta:
+        abstract = True
+
 class Author(Address):
-    address_ptr = models.OneToOneField(Address, on_delete=models.CASCADE,
-    parent_link=True, primary_key=True)
-    name = models.CharField(max_length=15)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+
 
     def __str__(self) -> str:
-        return self.name
+        return self.first_name
 
 class Book(models.Model):
+    address = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=15)
 
     def __str__(self) -> str:
