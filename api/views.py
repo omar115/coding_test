@@ -1,7 +1,13 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView, RetrieveAPIView, RetrieveUpdateAPIView, UpdateAPIView
+from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, UpdateModelMixin
+from rest_framework.parsers import FormParser, MultiPartParser
 from .models import *
 from .serializers import *
+from rest_framework.response import Response
 
+from rest_framework.exceptions import (
+    PermissionDenied, NotFound, NotAuthenticated, MethodNotAllowed
+)
 # Create your views here.
 
 class ParentListApiView(ListAPIView):
@@ -9,7 +15,12 @@ class ParentListApiView(ListAPIView):
     serializer_class = ParentUserModelSerializer
 
 
-class ParentRetrieveApiView(RetrieveAPIView):
+class ParentCreateApiView(CreateAPIView):
+    queryset = ParentUser.objects.all()
+    serializer_class = ParentUserModelSerializer
+    
+
+class ParentDestroyApiView(DestroyAPIView):
     queryset = ParentUser.objects.all()
     serializer_class = ParentUserModelSerializer
     lookup_field = 'id'
@@ -19,44 +30,28 @@ class ParentUpdateApiView(UpdateAPIView):
     serializer_class = ParentUserModelSerializer
     lookup_field = 'id'
 
-class ParentDestroyApiView(DestroyAPIView):
-    queryset = ParentUser.objects.all()
-    serializer_class = ParentUserModelSerializer
-    lookup_field = 'id'
+    def get(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        return Response(serializer.data)
+
+
 
 class ChildListApiView(ListAPIView):
     queryset = ChildUser.objects.all()
     serializer_class = ChildUserModelSerializer
 
-class ChildRetrieveApiView(RetrieveAPIView):
+class ChildCreateApiView(CreateAPIView):
+    queryset = ChildUser.objects.all()
+    serializer_class = ChildUserModelSerializer
+
+class ChildDeleteApiView(DestroyAPIView):
     queryset = ChildUser.objects.all()
     serializer_class = ChildUserModelSerializer
     lookup_field = 'id'
-
 
 class ChildUpdateApiView(RetrieveUpdateAPIView):
     queryset = ChildUser.objects.all()
     serializer_class = ChildUserModelSerializer
     lookup_field = 'id'
-
-
-# class ChildListApiView(ListAPIView):
-#     queryset = ChildUserModel.objects.all()
-#     serializer_class = ChildUserModelSerializer
-
-# class BookListApiView(ListAPIView):
-#     queryset = Book.objects.all()
-#     serializer_class = BookSerializer
-
-# class AuthorListApiView(ListAPIView):
-#     queryset = Author.objects.all()
-#     serializer_class = AuthorSerializer
-
-# class AuthorCreateApiView(CreateAPIView):
-#     queryset = Author.objects.all()
-#     serializer_class = AuthorSerializer
-
-# class BookUpdateApiView(UpdateAPIView):
-#     queryset = Book.objects.all()
-#     serializer_class = BookSerializer
-#     lookup_field='id'
