@@ -1,7 +1,6 @@
 from django.db import models
 
-# Create your models here.
-
+# parent user model
 class ParentUser(models.Model):
     first_name = models.CharField("Parent First Name", max_length=150, null=True, blank=True)
     last_name = models.CharField("Parent Last Name", max_length=150, null=True, blank=True)
@@ -17,6 +16,7 @@ class ParentUser(models.Model):
         return self.first_name
     
 
+# child user model
 class ChildUser(models.Model):
     parent_user = models.ForeignKey(ParentUser, on_delete=models.CASCADE, null=True, blank=True)
     child_first_name = models.CharField("Child First Name", max_length=150, null=True, blank=True)

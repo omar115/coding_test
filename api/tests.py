@@ -3,11 +3,11 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APITestCase
 from django.urls import reverse
-
 from . import models
 
-# Create your tests here.
+# api testing for both parent and child user 
 
+# api testing for POST method of Parent user
 class ParentUserTestCase(APITestCase):
 
     def test_parent_create(self):
@@ -28,6 +28,7 @@ class ParentUserTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
     
 
+# Api testing for POST method of child user
 class ChildUserTestCase(APITestCase):
 
     def setUp(self):

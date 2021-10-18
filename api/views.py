@@ -1,30 +1,28 @@
-from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView, RetrieveAPIView, RetrieveUpdateAPIView, UpdateAPIView
-from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, UpdateModelMixin
-from rest_framework.parsers import FormParser, MultiPartParser
-from .models import *
-from .serializers import *
+from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView, RetrieveUpdateAPIView, UpdateAPIView
+from .models import ParentUser, ChildUser
+from .serializers import ParentUserModelSerializer, ChildUserModelSerializer
 from rest_framework.response import Response
 
-from rest_framework.exceptions import (
-    PermissionDenied, NotFound, NotAuthenticated, MethodNotAllowed
-)
-# Create your views here.
 
+# Parent Views (List)
 class ParentListApiView(ListAPIView):
     queryset = ParentUser.objects.all()
     serializer_class = ParentUserModelSerializer
 
 
+# Parent Views for Creating 
 class ParentCreateApiView(CreateAPIView):
     queryset = ParentUser.objects.all()
     serializer_class = ParentUserModelSerializer
     
 
+# Api view for delete parent user
 class ParentDestroyApiView(DestroyAPIView):
     queryset = ParentUser.objects.all()
     serializer_class = ParentUserModelSerializer
     lookup_field = 'id'
 
+# update view for parent user 
 class ParentUpdateApiView(UpdateAPIView):
     queryset = ParentUser.objects.all()
     serializer_class = ParentUserModelSerializer
@@ -37,20 +35,23 @@ class ParentUpdateApiView(UpdateAPIView):
         return Response(serializer.data)
 
 
-
+# list view for child user
 class ChildListApiView(ListAPIView):
     queryset = ChildUser.objects.all()
     serializer_class = ChildUserModelSerializer
 
+# create view for child user
 class ChildCreateApiView(CreateAPIView):
     queryset = ChildUser.objects.all()
     serializer_class = ChildUserModelSerializer
 
+# delete view for child user
 class ChildDeleteApiView(DestroyAPIView):
     queryset = ChildUser.objects.all()
     serializer_class = ChildUserModelSerializer
     lookup_field = 'id'
 
+# update view for child user
 class ChildUpdateApiView(RetrieveUpdateAPIView):
     queryset = ChildUser.objects.all()
     serializer_class = ChildUserModelSerializer

@@ -1,15 +1,15 @@
-from django.db.models import fields
 from rest_framework import serializers
 from .models import *
 
 
+# Parent Model Serializer
 class ParentUserModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = ParentUser
         fields = '__all__'
     
-
-
+    
+# child Model Serializer
 class ChildUserModelSerializer(serializers.ModelSerializer):
 
     street = serializers.SerializerMethodField('get_street', read_only=True, required=False)
