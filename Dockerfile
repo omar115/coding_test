@@ -1,20 +1,12 @@
-FROM python:3.9-slim
-
+FROM python:3.9.7-alpine
 
 WORKDIR /app
 
-COPY requirements.txt /app/requirements.txt
+COPY . .
 
-RUN pip3 install --upgrade pip && \
-    pip3 install --no-cache-dir --upgrade -r /app/requirements.txt
-
-ENV PYTHONUNBUFFERED 1
+RUN pip3 install -r requirements.txt
 
 
-COPY . /app
+ENV PORT 8000
 
-# ENV PORT 8000
-# gunicorn as app server 
-
-# CMD exec gunicorn --bind 0.0.0.0:$PORT --workers 3 core.wsgi:application
-
+CMD gunicorn --bind :$PORT --workers 3 core.wsgi:application
